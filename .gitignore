@@ -1,0 +1,12 @@
+# Built APK
+*_signed.apk
+*_unsigned.apk
+*_repacked.apk
+
+# Keystore
+*.keystore
+*.jks
+
+# OS
+Thumbs.db
+.DS_Store
