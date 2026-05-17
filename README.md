@@ -1,10 +1,11 @@
-# Kanade 2.3 — 32 位適配版
+# Kanade 2.3 — 老舊 32 位晶片支援版
 
 [Kanade](https://github.com/rcmiku/Kanade) 是一款 Jetpack Compose 架構的 Android 音樂播放器。  
-本倉庫為原始 APK 經「魔解壓縮」後提取的目錄結構，並在此基礎上進行 **32 位元架構適配**。
+原 APK 已包含 32-bit（`armeabi-v7a`）原生庫，但在 Windows 上進行魔解壓縮時因**大小寫檔案覆蓋**導致資源損壞，使老舊 32 位晶片（如 NVIDIA Tegra K1）無法安裝。  
+本倉庫修復此問題，讓 Kanade 可在老舊 32 位裝置上正常安裝執行。
 
 **原始 APK：** `Kanade_2.3.apk`（AGP 9.2.1, compileSdk 37, minSdk 26）  
-**適配後簽名 APK：** `Kanade_2.3_signed.apk`（需自行以 `jarsigner` / `apksigner` 簽名）
+**修復後簽名 APK：** `Kanade_2.3_signed.apk`（需自行以 `jarsigner` / `apksigner` 簽名）
 
 ---
 
@@ -44,7 +45,7 @@
 | `res/is.xml` | 1428 B（正確）→ 1232 B | 被其他文件覆蓋 |
 | `res/un.xml` | 792 B（正確）→ 800 B | 內容偏移 |
 
-**影響：** 資源解析失敗 → APK 在部分裝置（如小米 Pad 1）顯示「解析套件出錯」  
+**影響：** 資源解析失敗 → APK 在老舊 32 位裝置（如小米 Pad 1 / NVIDIA Tegra K1）顯示「解析套件出錯」  
 **修復：** 直接從原始 APK zip 條目重建，繞過 Windows 檔案系統。
 
 ### 2. extractNativeLibs 改為 true
@@ -62,7 +63,7 @@
 | ABI | 位元 | 支援 |
 |-----|------|------|
 | `arm64-v8a` | 64-bit ARM | ✓ |
-| `armeabi-v7a` | 32-bit ARM | ✓（含小米 Pad 1 / NVIDIA Tegra K1） |
+| `armeabi-v7a` | 32-bit ARM | ✓ **（重點：老舊 32 位晶片如 NVIDIA Tegra K1 / 小米 Pad 1）** |
 | `x86_64` | 64-bit x86 | ✓ |
 | `x86` | 32-bit x86 | ✓ |
 
